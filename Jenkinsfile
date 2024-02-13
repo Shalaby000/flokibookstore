@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REGISTERY = 'dockingfloki/flokidocker'
-        BACKEND_IMAGE = '${DOCKER_REGISTERY}/bookstore-backend:${BUILD_NUMBER}'
+        DOCKER_REGISTRY = 'dockingfloki/flokidocker'
+        BACKEND_IMAGE = "${DOCKER_REGISTRY}/bookstore-backend:${BUILD_NUMBER}"
         K8S_NAMESPACE = 'default'
     }
 
@@ -11,8 +11,8 @@ pipeline {
         stage('Build Backend') {
             steps {
                 script {
-                   echo 'Building Uno...'
-                   sh 'docker build -t ${BACKEND_IMAGE} backend'     
+                    echo 'Building Uno...'
+                    sh "docker build -t ${BACKEND_IMAGE} backend"
                 }
             }
         }
@@ -20,8 +20,8 @@ pipeline {
         stage('Push Backend Image') {
             steps {
                 script {
-                   echo 'Pushing Uno...'
-                   sh 'docker push ${BACKEND_IMAGE}' 
+                    echo 'Pushing Uno...'
+                    sh "docker push ${BACKEND_IMAGE}"
                 }
             }
         }
@@ -30,8 +30,8 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying...'
-                    sh 'kubectl apply -f k8s/deployment.yaml --namespace=${K8S_NAMESPACE}'
-                    sh 'kubectl apply -f k8s/service.yaml --namespace=${K8S_NAMESPACE}'
+                    sh "kubectl apply -f k8s/deployment.yaml --namespace=${K8S_NAMESPACE}"
+                    sh "kubectl apply -f k8s/service.yaml --namespace=${K8S_NAMESPACE}"
                 }
             }
         }
