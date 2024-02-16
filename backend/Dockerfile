@@ -1,6 +1,6 @@
 FROM node:14
 
-WORKDIR /home/floki/All_Data/Bookstore_Project
+WORKDIR /home/floki/All_Data/Bookstore_Project/flokibookstore
 
 # Ensure that the backend directory exists and copy package files
 COPY backend/package.json backend/package-lock.json ./backend/
