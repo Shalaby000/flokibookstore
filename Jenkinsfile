@@ -6,8 +6,17 @@ pipeline {
         BACKEND_IMAGE = "${DOCKER_REGISTRY}/bookstore-backend:${BUILD_NUMBER}"
         K8S_NAMESPACE = 'default'
     }
-
+    
     stages {
+        stage('Login to Docker') {
+            steps {
+                script {
+                    echo 'Logging into Docker registry...'
+                    sh "docker login -u dockingfloki -p alcvb567987"
+                }
+            }
+        }
+
         stage('Build Backend') {
             steps {
                 script {
