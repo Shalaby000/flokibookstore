@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     echo 'Building Uno...'
-                    sh "docker build -t ${BACKEND_IMAGE} backend"
+                    sh "docker build -t ${BACKEND_IMAGE} -f Dockerfile ."
                 }
             }
         }
