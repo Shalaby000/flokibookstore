@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY = 'dockingfloki/flokidocker'
-        BACKEND_IMAGE = "${{DOCKER_REGISTRY}}/bookstore-backend:${{BUILD_NUMBER}}"
-        TAGGED_BACKEND_IMAGE = "${{DOCKER_REGISTRY}}/bookstore-backend:storm" // Defining the new tagged image
+        BACKEND_IMAGE = "${DOCKER_REGISTRY}/bookstore-backend:${BUILD_NUMBER}"
+        TAGGED_BACKEND_IMAGE = "${DOCKER_REGISTRY}/bookstore-backend:storm" // Defining the new tagged image
         K8S_NAMESPACE = 'default'
     }
     
@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     echo 'Building Uno...'
-                    sh "docker build -t ${{BACKEND_IMAGE}} -f Dockerfile ."
+                    sh "docker build -t ${BACKEND_IMAGE} -f Dockerfile ."
                 }
             }
         }
