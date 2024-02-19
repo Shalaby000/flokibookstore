@@ -22,11 +22,11 @@ pipeline {
             steps {
                 script {
                     echo 'Logging into Docker registry...'
-                    sh "docker login -u dockingfloki -p alcvb567987" docker.io
+                    sh "echo alcvb567987 | docker login -u dockingfloki --password-stdin" docker.io
                 }
             }
         }
-        
+
         stage('Push Backend Image') {
             steps {
                 script {

@@ -1,0 +1,183 @@
+Started by user Ahmed Shalaby
+Obtained Jenkinsfile from git git@github.com:Shalaby000/flokibookstore.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/pipeline_dos
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential floooki
+Cloning the remote Git repository
+Cloning repository git@github.com:Shalaby000/flokibookstore.git
+ > git init /var/lib/jenkins/workspace/pipeline_dos # timeout=10
+Fetching upstream changes from git@github.com:Shalaby000/flokibookstore.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+using GIT_SSH to set credentials 
+Verifying host key using known hosts file
+ > git fetch --tags --force --progress -- git@github.com:Shalaby000/flokibookstore.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url git@github.com:Shalaby000/flokibookstore.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 249c070a9ac00b529bbd151b2c1c4c6e5fe5fdf7 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 249c070a9ac00b529bbd151b2c1c4c6e5fe5fdf7 # timeout=10
+Commit message: "changes to Jenkinsfile"
+ > git rev-list --no-walk 874f57ed6c89e8d53b85af24911f7705e1259434 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build Backend)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+Building Uno...
+[Pipeline] sh
++ docker build -t dockingfloki/flokidocker/bookstore-backend:latest -f Dockerfile .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 585B done
+#1 DONE 0.0s
+
+#2 [auth] library/node:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:14
+#3 DONE 1.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/node:14@sha256:a158d3b9b4e3fa813fa6c8c590b8f0a860e015ad4e59bbce5744d2f6fd8461aa
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 1.14kB done
+#6 DONE 0.0s
+
+#7 [2/7] WORKDIR /home/floki/All_Data/Bookstore_Project/flokibookstore
+#7 CACHED
+
+#8 [6/7] RUN npm install
+#8 CACHED
+
+#9 [5/7] WORKDIR /home/floki/All_Data/Bookstore_Project/flokibookstore/backend
+#9 CACHED
+
+#10 [3/7] RUN mkdir -p backend
+#10 CACHED
+
+#11 [4/7] COPY backend/package.json backend/package-lock.json ./backend/
+#11 CACHED
+
+#12 [7/7] WORKDIR /home/floki/All_Data/Bookstore_Project/flokibookstore
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:ea9e2981b8dce0df643bca62b40181e7d35ebe02e6c82d247def42b42935eee5 done
+#13 naming to docker.io/dockingfloki/flokidocker/bookstore-backend:latest done
+#13 DONE 0.0s
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Login to Docker)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+Logging into Docker registry...
+[Pipeline] sh
++ docker login -u dockingfloki -p alcvb567987
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/lib/jenkins/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push Backend Image)
+Stage "Push Backend Image" skipped due to earlier failure(s)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy Backend to K8s)
+Stage "Deploy Backend to K8s" skipped due to earlier failure(s)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Also:   org.jenkinsci.plugins.workflow.actions.ErrorAction$ErrorId: 90a6085b-945e-44d6-9443-52e6db893f8c
+java.lang.NullPointerException: Cannot get property 'docker' on null object
+	at org.codehaus.groovy.runtime.NullObject.getProperty(NullObject.java:60)
+	at org.codehaus.groovy.runtime.InvokerHelper.getProperty(InvokerHelper.java:190)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.getProperty(ScriptBytecodeAdapter.java:469)
+	at org.kohsuke.groovy.sandbox.impl.Checker$7.call(Checker.java:377)
+	at org.kohsuke.groovy.sandbox.impl.Checker.checkedGetProperty(Checker.java:379)
+	at com.cloudbees.groovy.cps.sandbox.SandboxInvoker.getProperty(SandboxInvoker.java:29)
+	at org.jenkinsci.plugins.workflow.cps.LoggingInvoker.getProperty(LoggingInvoker.java:121)
+	at com.cloudbees.groovy.cps.impl.PropertyAccessBlock.rawGet(PropertyAccessBlock.java:20)
+	at WorkflowScript.run(WorkflowScript:25)
+	at ___cps.transform___(Native Method)
+	at com.cloudbees.groovy.cps.impl.PropertyishBlock$ContinuationImpl.get(PropertyishBlock.java:73)
+	at com.cloudbees.groovy.cps.LValueBlock$GetAdapter.receive(LValueBlock.java:30)
+	at com.cloudbees.groovy.cps.impl.PropertyishBlock$ContinuationImpl.fixName(PropertyishBlock.java:65)
+	at jdk.internal.reflect.GeneratedMethodAccessor176.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.cloudbees.groovy.cps.impl.ContinuationPtr$ContinuationImpl.receive(ContinuationPtr.java:72)
+	at com.cloudbees.groovy.cps.impl.ConstantBlock.eval(ConstantBlock.java:21)
+	at com.cloudbees.groovy.cps.Next.step(Next.java:83)
+	at com.cloudbees.groovy.cps.Continuable$1.call(Continuable.java:152)
+	at com.cloudbees.groovy.cps.Continuable$1.call(Continuable.java:146)
+	at org.codehaus.groovy.runtime.GroovyCategorySupport$ThreadCategoryInfo.use(GroovyCategorySupport.java:136)
+	at org.codehaus.groovy.runtime.GroovyCategorySupport.use(GroovyCategorySupport.java:275)
+	at com.cloudbees.groovy.cps.Continuable.run0(Continuable.java:146)
+	at org.jenkinsci.plugins.workflow.cps.SandboxContinuable.access$001(SandboxContinuable.java:18)
+	at org.jenkinsci.plugins.workflow.cps.SandboxContinuable.run0(SandboxContinuable.java:51)
+	at org.jenkinsci.plugins.workflow.cps.CpsThread.runNextChunk(CpsThread.java:187)
+	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup.run(CpsThreadGroup.java:423)
+	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup$2.call(CpsThreadGroup.java:331)
+	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup$2.call(CpsThreadGroup.java:295)
+	at org.jenkinsci.plugins.workflow.cps.CpsVmExecutorService$2.call(CpsVmExecutorService.java:97)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at hudson.remoting.SingleLaneExecutorService$1.run(SingleLaneExecutorService.java:139)
+	at jenkins.util.ContextResettingExecutorService$1.run(ContextResettingExecutorService.java:28)
+	at jenkins.security.ImpersonatingExecutorService$1.run(ImpersonatingExecutorService.java:68)
+	at jenkins.util.ErrorLoggingExecutorService.lambda$wrap$0(ErrorLoggingExecutorService.java:51)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Finished: FAILURE
