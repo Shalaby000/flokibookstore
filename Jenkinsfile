@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'dockingfloki/flokidocker'
         BACKEND_IMAGE = "${DOCKER_REGISTRY}/bookstore-backend:${BUILD_NUMBER}"
+        TAGGED_BACKEND_IMAGE = "${DOCKER_REGISTRY}/bookstore-backend:storm" // Defining the new tagged image
         K8S_NAMESPACE = 'default'
     }
     
@@ -26,12 +27,20 @@ pipeline {
                 }
             }
         }
+        stage('Tagging Image') {
+            steps {
+                script {
+                    echo 'Tagging Created Docker Image Before Pushing...'
+                    sh "docker tag ${BACKEND_IMAGE} ${TAGGED_BACKEND_IMAGE}"
+                }
+            }
+        }
 
         stage('Push Backend Image') {
             steps {
                 script {
                     echo 'Pushing Uno...'
-                    sh "docker push ${BACKEND_IMAGE}"
+                    sh "docker push ${TAGGED_BACKEND_IMAGE}"
                 }
             }
         }
