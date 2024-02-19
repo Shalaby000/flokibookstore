@@ -8,16 +8,7 @@ pipeline {
         K8S_NAMESPACE = 'default'
     }
     
-
     stages {
-        stage('Build Backend') {
-            steps {
-                script {
-                    echo 'Building Uno...'
-                    sh "docker build -t ${BACKEND_IMAGE} -f Dockerfile ."
-                }
-            }
-        }
 
         stage('Login to Docker') {
             steps {
@@ -27,7 +18,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Tagging Image') {
             steps {
                 script {
@@ -36,6 +27,16 @@ pipeline {
                 }
             }
         }
+
+        stage('Build Backend') {
+            steps {
+                script {
+                    echo 'Building Uno...'
+                    sh "docker build -t ${BACKEND_IMAGE} -f Dockerfile ."
+                }
+            }
+        }
+
 
         stage('Push Backend Image') {
             steps {
