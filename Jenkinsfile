@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pushing Uno...'
-                    sh "docker push dockingfloko/${TAGGED_BACKEND_IMAGE}:storm"
+                    sh "docker push dockingfloki/${TAGGED_BACKEND_IMAGE}"
                 }
             }
         }
