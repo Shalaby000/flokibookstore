@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     echo 'Tagging Created Docker Image Before Pushing...'
-                    sh "docker tag ${{BACKEND_IMAGE}} ${{TAGGED_BACKEND_IMAGE}}"
+                    sh "docker tag ${BACKEND_IMAGE} ${TAGGED_BACKEND_IMAGE}"
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pushing Uno...'
-                    sh "docker push dockingfloko/${{TAGGED_BACKEND_IMAGE}}:storm"
+                    sh "docker push dockingfloko/${TAGGED_BACKEND_IMAGE}:storm"
                 }
             }
         }
