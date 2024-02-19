@@ -18,7 +18,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Tagging Image') {
             steps {
                 script {
@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pushing Uno...'
-                    sh "docker push dockingfloki/${TAGGED_BACKEND_IMAGE}"
+                    sh "docker push ${TAGGED_BACKEND_IMAGE}"
                 }
             }
         }
