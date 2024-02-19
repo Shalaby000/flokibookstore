@@ -3,27 +3,27 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY = 'dockingfloki/flokidocker'
-        BACKEND_IMAGE = "${DOCKER_REGISTRY}/bookstore-backend:${BUILD_NUMBER}"
-        TAGGED_BACKEND_IMAGE = "${DOCKER_REGISTRY}/bookstore-backend:storm" // Defining the new tagged image
+        BACKEND_IMAGE = "${{DOCKER_REGISTRY}}/bookstore-backend:${{BUILD_NUMBER}}"
+        TAGGED_BACKEND_IMAGE = "${{DOCKER_REGISTRY}}/bookstore-backend:storm" // Defining the new tagged image
         K8S_NAMESPACE = 'default'
     }
     
 
     stages {
-        stage('Login to Docker') {
-            steps {
-                script {
-                    echo 'Logging into Docker registry...'
-                    sh "echo alcvb567987 | docker login -u dockingfloki --password-stdin" docker.io
-                }
-            }
-        }
-        
         stage('Build Backend') {
             steps {
                 script {
                     echo 'Building Uno...'
-                    sh "docker build -t ${BACKEND_IMAGE} -f Dockerfile ."
+                    sh "docker build -t ${{BACKEND_IMAGE}} -f Dockerfile ."
+                }
+            }
+        }
+
+        stage('Login to Docker') {
+            steps {
+                script {
+                    echo 'Logging into Docker registry...'
+                    sh "echo alcvb567987 | docker login -u dockingfloki --password-stdin"
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     echo 'Tagging Created Docker Image Before Pushing...'
-                    sh "docker tag ${BACKEND_IMAGE} ${TAGGED_BACKEND_IMAGE}"
+                    sh "docker tag ${{BACKEND_IMAGE}} ${{TAGGED_BACKEND_IMAGE}}"
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pushing Uno...'
-                    sh "docker push ${TAGGED_BACKEND_IMAGE}"
+                    sh "docker push ${{TAGGED_BACKEND_IMAGE}}"
                 }
             }
         }
