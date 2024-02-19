@@ -7,16 +7,8 @@ pipeline {
         K8S_NAMESPACE = 'default'
     }
     
-    stages {
-        stage('Login to Docker') {
-            steps {
-                script {
-                    echo 'Logging into Docker registry...'
-                    sh "docker login -u dockingfloki -p alcvb567987"
-                }
-            }
-        }
 
+    stages {
         stage('Build Backend') {
             steps {
                 script {
@@ -26,6 +18,15 @@ pipeline {
             }
         }
 
+        stage('Login to Docker') {
+            steps {
+                script {
+                    echo 'Logging into Docker registry...'
+                    sh "docker login -u dockingfloki -p alcvb567987" docker.io
+                }
+            }
+        }
+        
         stage('Push Backend Image') {
             steps {
                 script {
