@@ -7,7 +7,7 @@ pipeline {
             steps {
                 script {
                     echo 'Logging into Docker registry...'
-                    sh "echo alcvb567987 | docker login -u dockingfloki --password-stdin docker.io"
+                    withDockerRegistry([credentialsId: "dockingfloki_cred", url: "https://hub.docker.com"])
                 }
             }
         }
