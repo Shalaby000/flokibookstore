@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pulling simple Image'
-                    sh "docker pull linux:alpine"
+                    sh "docker pull alpine"
                 }
             }
         }
