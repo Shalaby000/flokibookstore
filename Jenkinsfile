@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     echo 'Tagging Created Docker Image Before Pushing...'
-                    sh "docker tag alpine dockingfloki/flokidocker:latest"
+                    sh "docker tag alpine dockingfloki/flokidocker/alpine:latest"
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pushing Uno...'
-                    sh "docker push alpine}"
+                    sh "docker push dockingfloki/flokidocker/alpine:latest}"
                 }
             }
         }
