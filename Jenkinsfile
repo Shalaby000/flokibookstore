@@ -8,6 +8,7 @@ pipeline {
                 script {
                     echo 'Logging into Docker registry...'
                     withDockerRegistry([credentialsId: "dockingfloki_cred", url: "https://hub.docker.com"])
+                    echo 'Logging Succeeded'
                 }
             }
         }
