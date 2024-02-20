@@ -21,6 +21,15 @@ pipeline {
             }
         }
 
+        stage('Tagging Image') {
+            steps {
+                script {
+                    echo 'Tagging Created Docker Image Before Pushing...'
+                    sh "docker tag alpine dockingfloki/flokidocker:latest"
+                }
+            }
+        }
+
         stage('Push Backend Image') {
             steps {
                 script {
