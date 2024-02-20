@@ -5,9 +5,9 @@ pipeline {
 
         stage('Login to Docker') {
             steps {
+                echo 'Logging into Docker registry...'
                 script {
-                    echo 'Logging into Docker registry...'
-                    withDockerRegistry([credentialsId: "$DOCKINGFLOKI_CRED", url: "https://hub.docker.com"])
+                    withDockerRegistry([credentialsId: "$DOCKINGFLOKI_CRED", url: "https://hub.docker.com/repository/docker/dockingfloki/flokidocker"])
                     echo 'Logging Succeeded'
                 }
             }
