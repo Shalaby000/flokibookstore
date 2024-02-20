@@ -20,5 +20,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Push Backend Image') {
+            steps {
+                script {
+                    echo 'Pushing Uno...'
+                    sh "docker push alpine}"
+                }
+            }
+        }
     }
 }
